@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="debug">
+  <Properties>
+    <Property name="APP" value="myApp_log4j2"/>
+    <Property name="LOG_PATH" value="target/"/>
+    
+    <Property name="APP_LOG" value="${LOG_PATH}${APP}"/>
+  </Properties>
+
+  <Appenders>
+    <RollingFile name="fileLogger" fileName="${APP_LOG}.log" filePattern="${APP_LOG}-%d{yyyy-MM-dd}-%i.log.gz">
+      <PatternLayout>
+        <pattern>%date %-5level [%thread] %logger - %msg%n</pattern>
+      </PatternLayout>
+      <Policies>
+        <SizeBasedTriggeringPolicy size="50 KB" />
+        <!-- <TimeBasedTriggeringPolicy interval="1" modulate="true" /> -->
+      </Policies>
+      <DefaultRolloverStrategy max="200" />
+    </RollingFile>
+
+  </Appenders>
+
+  <Loggers>
+    <Root level="ALL" additivity="false">
+      <appender-ref ref="fileLogger" />
+    </Root>
+  </Loggers>
+</Configuration>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration debug="true">
+
+  <property name="APP" value="myApp_logback"/>
+  <property name="LOG_PATH" value="target/"/>
+  
+  <property name="APP_LOG" value="${LOG_PATH}${APP}"/>
+  
+  <property name="FILE_PATTERN" value="%date %-5level [%thread] %logger - %msg%n"/>
+  
+  <property name="ROOT_LOG_LEVEL" value="ALL"/>
+  
+  <property name="LOG_FILE_MAX_SIZE" value="5KB"/>
+  <property name="LOG_MAX_HISTORY" value="5"/>
+  <property name="LOG_TOTAL_MAX_SIZE" value="2MB"/>
+  
+  <property name="FILE_ROLLOVER" value="file_rollover"/>  
+  <appender name="${FILE_ROLLOVER}" class="ch.qos.logback.core.rolling.RollingFileAppender">  
+    <file>${APP_LOG}.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>${APP_LOG}.%d{yyyy-MM-dd}-%i.log.zip</fileNamePattern>
+      <totalSizeCap>${LOG_TOTAL_MAX_SIZE}</totalSizeCap>
+      <maxFileSize>${LOG_FILE_MAX_SIZE}</maxFileSize>
+      <maxHistory>${LOG_MAX_HISTORY}</maxHistory>
+
+    </rollingPolicy>
+
+    <encoder>
+      <pattern>${FILE_PATTERN}</pattern>
+    </encoder>
+  </appender>
+  
+  <root level="${ROOT_LOG_LEVEL}">
+    <appender-ref ref="${FILE_ROLLOVER}"/>
+  </root>
+</configuration>
