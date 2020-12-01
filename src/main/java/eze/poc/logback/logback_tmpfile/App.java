@@ -9,23 +9,27 @@ import org.slf4j.LoggerFactory;
 public class App {
 	
 	private final int multiplicationFactor;
+
+	private final int repeat;
 	
 	private static final Logger LOG = LoggerFactory.getLogger(App.class);
 
 	/**
 	 * @param multiplicationFactor
+	 * @param repeat 
 	 */
-	public App(final int multiplicationFactor) {
+	public App(final int multiplicationFactor, final int repeat) {
 		this.multiplicationFactor = multiplicationFactor;
+		this.repeat = repeat;
 	}
 
 	public static void main(final String[] args) {
 		final int multiplicationFactor = 6;
 		final int repeat = 1000;
 		
-		final App app = new App(multiplicationFactor);
+		final App app = new App(multiplicationFactor, repeat);
 		
-		app.log(repeat);
+		app.log();
 	}
 	
 	private String buildRandomMessage() {
@@ -44,7 +48,7 @@ public class App {
 		return sb.toString();
 	}
 	
-	private void log(final int repeat) {
+	private void log() {
 		int iteraction = 0;
 		do {
 			LOG.trace("iteration: {} message: {}", iteraction, buildRandomMessage());
@@ -52,6 +56,7 @@ public class App {
 			LOG.info("iteration: {} message: {}", iteraction, buildRandomMessage());
 			LOG.warn("iteration: {} message: {}", iteraction, buildRandomMessage());
 			LOG.error("iteration: {} message: {}", iteraction, buildRandomMessage());			
-		} while (repeat > iteraction++);
+		} while (this.repeat > iteraction++);
 	}
+	
 }
